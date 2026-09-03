@@ -48,7 +48,7 @@ export default async function ProductPage({ params }: Props) {
       <div className="grid gap-10 md:grid-cols-2">
         <ProductGallery product={product} />
         <div>
-          <h1 className="text-3xl md:text-4xl">{product.title}</h1>
+          <h1 className="section-heading">{product.title}</h1>
           <p className="mt-2 text-sm text-[#6b4f3a]">
             100% hand-painted · Made-to-order in India
           </p>

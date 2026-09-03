@@ -10,8 +10,17 @@ export default async function SearchPage({
   const results = searchProducts(q);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-4xl">Search</h1>
+    <div className="page-width py-10">
+      <h1 className="section-heading">Search</h1>
+      <form action="/search" className="mt-6 max-w-xl">
+        <input
+          type="search"
+          name="q"
+          defaultValue={q}
+          placeholder="Search"
+          className="h-12 w-full border border-[#d4c6b8] bg-white px-3 text-sm outline-none"
+        />
+      </form>
       {q ? (
         <p className="mt-3 text-[#4a403a]">
           {results.length} result{results.length === 1 ? "" : "s"} for “{q}”

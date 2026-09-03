@@ -44,7 +44,7 @@ export default async function CollectionPage({ params }: Props) {
         </Link>
         <span> / {col.title}</span>
       </p>
-      <h1 className="text-4xl">{col.title}</h1>
+      <h1 className="section-heading">{col.title}</h1>
       {col.description && (
         <p className="mt-4 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-[#4a403a]">
           {col.description}

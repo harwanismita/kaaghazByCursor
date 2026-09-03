@@ -49,17 +49,35 @@ a {
   padding-inline: 1.5rem;
 }
 
+@media (min-width: 750px) {
+  .page-width {
+    padding-inline: 5rem;
+  }
+}
+
+.section-heading {
+  font-size: 1.875rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 750px) {
+  .section-heading {
+    font-size: 2.5rem;
+  }
+}
+
 .dawn-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 12rem;
-  min-height: 3rem;
-  padding: 0.75rem 2.2rem;
+  min-width: 11.5rem;
+  min-height: 2.85rem;
+  padding: 0.7rem 1.8rem;
   background: #6b4f3a;
   color: #fff;
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 0.9375rem;
+  letter-spacing: 0.08em;
   line-height: 1.2;
   text-align: center;
 }
@@ -78,6 +96,7 @@ a {
   border: 1px solid #6b4f3a;
   background: transparent;
   color: #6b4f3a;
+  font-family: var(--font-inter), Inter, sans-serif;
   font-size: 0.9rem;
   letter-spacing: 0.04em;
 }

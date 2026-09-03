@@ -42,7 +42,7 @@ export function ProductCard({ product }: { product: Product }) {
             </span>
           )}
         </div>
-        <h3 className="mt-3 text-[15px] leading-snug underline-offset-4 group-hover:underline">
+        <h3 className="mt-3 text-[14px] leading-snug underline-offset-4 group-hover:underline">
           {product.title}
         </h3>
         <p className="mt-1 text-[14px]">
@@ -103,7 +103,7 @@ export function ProductGrid({
     );
   }
   return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-x-2 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
       {products.map((p) => (
         <ProductCard key={p.handle} product={p} />
       ))}
