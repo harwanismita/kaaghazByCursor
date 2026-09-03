@@ -5,6 +5,7 @@
   --foreground: #2e2a27;
   --accent: #6b4f3a;
   --muted: #e8ddd4;
+  --page-width: 1200px;
 }
 
 @theme inline {
@@ -24,6 +25,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 h1,
@@ -32,10 +35,56 @@ h3,
 .font-serif {
   font-family: var(--font-playfair), Playfair Display, serif;
   font-weight: 400;
+  letter-spacing: 0;
 }
 
 a {
   color: inherit;
+}
+
+.page-width {
+  width: 100%;
+  max-width: var(--page-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.dawn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12rem;
+  min-height: 3rem;
+  padding: 0.75rem 2.2rem;
+  background: #6b4f3a;
+  color: #fff;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.dawn-btn:hover {
+  background: #563f2e;
+}
+
+.dawn-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid #6b4f3a;
+  background: transparent;
+  color: #6b4f3a;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+.dawn-btn-secondary:hover {
+  background: #6b4f3a;
+  color: #fff;
 }
 
 .rte p + p {

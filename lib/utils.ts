@@ -6,11 +6,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatInr(amount: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(amount);
+  return `Rs. ${amount.toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 }
 
 export function shopifyImage(src: string, width = 800) {

@@ -101,7 +101,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           type="submit"
           name="intent"
           value="add"
-          className="h-11 flex-1 bg-[#6b4f3a] px-6 text-sm font-semibold tracking-wide text-white hover:bg-[#563f2e] disabled:opacity-50"
+          className="dawn-btn flex-1 disabled:opacity-50"
           disabled={!variant.available}
         >
           {variant.available ? "Add to cart" : "Sold out"}
@@ -110,7 +110,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           type="submit"
           name="intent"
           value="buy"
-          className="h-11 flex-1 border border-[#6b4f3a] bg-transparent px-6 text-sm font-semibold tracking-wide text-[#6b4f3a] hover:bg-[#6b4f3a] hover:text-white disabled:opacity-50"
+          className="dawn-btn-secondary flex-1 disabled:opacity-50"
           disabled={!variant.available}
         >
           Buy now

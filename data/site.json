@@ -20,6 +20,10 @@
   "currency": "INR",
   "nav": [
     {
+      "href": "/",
+      "label": "Home"
+    },
+    {
       "href": "/collections/kids-nameplates",
       "label": "Kids Nameplates"
     },

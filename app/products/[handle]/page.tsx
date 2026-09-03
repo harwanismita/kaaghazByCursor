@@ -37,7 +37,7 @@ export default async function ProductPage({ params }: Props) {
     .slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
+    <div className="page-width py-10">
       <p className="mb-6 text-sm text-[#6b4f3a]">
         <Link href="/" className="hover:underline">
           Home

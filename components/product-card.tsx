@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
+import { addToCart } from "@/app/actions/cart";
 import {
   isOnSale,
   maxCompare,
@@ -14,10 +14,13 @@ export function ProductCard({ product }: { product: Product }) {
   const price = minPrice(product);
   const compare = maxCompare(product);
   const sale = isOnSale(product);
-  const from = product.variants.length > 1 && product.variants.some((v) => v.price !== price);
+  const hasOptions = product.options.length > 0;
+  const from =
+    product.variants.length > 1 &&
+    product.variants.some((v) => v.price !== price);
 
   return (
-    <article className="group">
+    <article className="group flex h-full flex-col">
       <Link href={`/products/${product.handle}`} className="block">
         <div className="relative aspect-square overflow-hidden bg-[#e8ddd4]">
           {image ? (
@@ -26,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
               alt={image.alt}
               fill
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              className="object-cover"
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-[#8a7d72]">
@@ -34,27 +37,53 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           )}
           {sale && (
-            <Badge className="absolute left-2 top-2">Sale</Badge>
-          )}
-          {!product.available && (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#f7f3ee]/70 text-sm font-semibold uppercase tracking-wider text-[#6b4f3a]">
-              Sold out
-            </div>
-          )}
-        </div>
-        <h3 className="mt-3 text-[15px] leading-snug text-[#2e2a27] underline-offset-4 group-hover:underline">
-          {product.title}
-        </h3>
-        <p className="mt-1 text-sm text-[#2e2a27]">
-          {compare && compare > price && (
-            <span className="mr-2 text-[#8a7d72] line-through">
-              {formatInr(compare)}
+            <span className="absolute bottom-2 left-2 bg-[#6b4f3a] px-2 py-0.5 text-[11px] text-white">
+              Sale
             </span>
           )}
-          {from ? "From " : ""}
-          {formatInr(price)}
+        </div>
+        <h3 className="mt-3 text-[15px] leading-snug underline-offset-4 group-hover:underline">
+          {product.title}
+        </h3>
+        <p className="mt-1 text-[14px]">
+          {compare && compare > price && (
+            <s className="mr-2 text-[#8a7d72]">{formatInr(compare)}</s>
+          )}
+          <span>
+            {from ? "From " : ""}
+            {formatInr(price)}
+          </span>
         </p>
       </Link>
+      <div className="mt-3">
+        {hasOptions ? (
+          <Link
+            href={`/products/${product.handle}`}
+            className="dawn-btn-secondary"
+          >
+            Choose options
+          </Link>
+        ) : (
+          <form action={addToCart}>
+            <input type="hidden" name="handle" value={product.handle} />
+            <input
+              type="hidden"
+              name="variantId"
+              value={String(product.variants[0]?.id ?? "")}
+            />
+            <input type="hidden" name="quantity" value="1" />
+            <button
+              type="submit"
+              name="intent"
+              value="add"
+              className="dawn-btn-secondary"
+              disabled={!product.available}
+            >
+              {product.available ? "Add to cart" : "Sold out"}
+            </button>
+          </form>
+        )}
+      </div>
     </article>
   );
 }
@@ -69,7 +98,7 @@ export function ProductGrid({
   if (products.length === 0) {
     return (
       <p className="py-16 text-center text-[#6b4f3a]">
-        {empty ?? "Nothing here yet. Check back soon, or send us a custom order."}
+        {empty ?? "Nothing here yet. Check back soon, or send a custom order."}
       </p>
     );
   }
