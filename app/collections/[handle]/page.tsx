@@ -7,8 +7,12 @@ import {
   products,
   productsForCollection,
 } from "@/lib/catalog";
+import { minPrice, type Product } from "@/lib/types";
 
-type Props = { params: Promise<{ handle: string }> };
+type Props = {
+  params: Promise<{ handle: string }>;
+  searchParams: Promise<{ sort?: string }>;
+};
 
 export function generateStaticParams() {
   return [{ handle: "all" }, ...collections.map((c) => ({ handle: c.handle }))];
@@ -21,8 +25,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: col?.title ?? "Collection", description: col?.description };
 }
 
-export default async function CollectionPage({ params }: Props) {
+function sortProducts(items: Product[], sort: string) {
+  const copy = [...items];
+  if (sort === "price-asc") copy.sort((a, b) => minPrice(a) - minPrice(b));
+  else if (sort === "price-desc") copy.sort((a, b) => minPrice(b) - minPrice(a));
+  else if (sort === "alpha") copy.sort((a, b) => a.title.localeCompare(b.title));
+  return copy;
+}
+
+export default async function CollectionPage({ params, searchParams }: Props) {
   const { handle } = await params;
+  const { sort = "featured" } = await searchParams;
   const isAll = handle === "all";
   const col = isAll
     ? {
@@ -33,24 +46,45 @@ export default async function CollectionPage({ params }: Props) {
     : getCollection(handle);
   if (!col) notFound();
 
-  const items = isAll ? products : productsForCollection(handle);
+  const items = sortProducts(
+    isAll ? products : productsForCollection(handle),
+    sort,
+  );
 
   return (
     <div className="page-width py-10">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="section-heading">{col.title}</h1>
-          {col.description && (
-            <p className="mt-4 max-w-3xl whitespace-pre-line text-[16px] leading-7">
-              {col.description}
-            </p>
-          )}
-        </div>
-        <p className="text-[14px]">
-          {items.length} {items.length === 1 ? "product" : "products"}
+      <h1 className="section-heading">
+        {isAll ? col.title : `Collection: ${col.title}`}
+      </h1>
+      {col.description && (
+        <p className="mt-4 max-w-3xl whitespace-pre-line text-[16px] leading-7">
+          {col.description}
         </p>
-      </div>
-      <div className="mt-10">
+      )}
+      <form
+        className="mt-8 flex flex-wrap items-center justify-end gap-3 text-[14px]"
+        method="get"
+      >
+        <label htmlFor="sort">Sort by:</label>
+        <select
+          id="sort"
+          name="sort"
+          defaultValue={sort}
+          className="h-10 border-0 bg-transparent text-[14px]"
+        >
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price, low to high</option>
+          <option value="price-desc">Price, high to low</option>
+          <option value="alpha">Alphabetically, A-Z</option>
+        </select>
+        <button type="submit" className="underline">
+          Apply
+        </button>
+        <span>
+          {items.length} {items.length === 1 ? "product" : "products"}
+        </span>
+      </form>
+      <div className="mt-6">
         <ProductGrid
           products={items}
           empty="This collection is being restocked. Follow @kaaghaz_theartstudio or send a custom order."

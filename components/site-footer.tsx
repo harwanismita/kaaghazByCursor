@@ -13,7 +13,7 @@ export function SiteFooter() {
     <footer className="mt-9 border-t border-[#ece4db] bg-[#f7f3ee]">
       <div className="page-width grid gap-10 py-9 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1.5fr]">
         <div>
-          <h2 className="font-serif text-[22px]">Quick links</h2>
+          <h2 className="font-serif text-[18px]">Quick links</h2>
           <ul className="mt-5 space-y-2.5 text-[16px]">
             {quickLinks.map((l) => (
               <li key={l.href}>
@@ -25,7 +25,7 @@ export function SiteFooter() {
           </ul>
         </div>
         <div>
-          <h2 className="font-serif text-[22px]">Reach us</h2>
+          <h2 className="font-serif text-[18px]">Reach us</h2>
           <p className="mt-5 text-[16px] leading-7">
             ✉ {site.email}
             <br />
@@ -40,7 +40,7 @@ export function SiteFooter() {
           </p>
         </div>
         <div>
-          <h2 className="font-serif text-[22px] leading-snug">
+          <h2 className="font-serif text-[18px] leading-snug">
             Subscribe to our emails (Join us — early access to new pieces,
             festival drops, founder notes.)
           </h2>

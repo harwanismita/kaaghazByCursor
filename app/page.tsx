@@ -128,7 +128,7 @@ export default function HomePage() {
           />
         </div>
         <div className="text-center md:px-8">
-          <h2 className="section-heading">Painted by hand. By me</h2>
+          <h2 className="section-heading mx-auto w-fit">Painted by hand. By me</h2>
           <p className="mt-5 text-[15px] leading-8">
             Hi, I&apos;m <strong>Smita</strong>. I paint every piece you see
             here, in my studio, by hand. What started as painting on paper
@@ -152,7 +152,7 @@ export default function HomePage() {
           />
         </div>
         <div className="text-left md:px-8 md:text-center">
-          <h2 className="section-heading">
+          <h2 className="section-heading mx-auto w-fit">
             Need a name on it? Bulk for an event?
           </h2>
           <p className="mt-5 text-[15px] leading-8">

@@ -42,20 +42,6 @@ export function ProductBuyBox({ product }: { product: Product }) {
         </div>
       ))}
 
-      {product.needsName && (
-        <div>
-          <label className="mb-2 block text-[14px] text-[#2e2a27]" htmlFor="name-to-paint">
-            Enter your text
-          </label>
-          <input
-            id="name-to-paint"
-            name="nameToPaint"
-            placeholder="Type here"
-            className="h-12 w-full border border-[#d4c6b8] bg-white px-3 text-[15px]"
-          />
-        </div>
-      )}
-
       <div>
         <label className="mb-2 block text-[14px] text-[#2e2a27]" htmlFor="qty">
           Quantity
@@ -77,6 +63,20 @@ export function ProductBuyBox({ product }: { product: Product }) {
           </span>
         </div>
       </div>
+
+      {product.needsName && (
+        <div>
+          <label className="mb-2 block text-[14px] text-[#2e2a27]" htmlFor="name-to-paint">
+            Enter your text
+          </label>
+          <input
+            id="name-to-paint"
+            name="nameToPaint"
+            placeholder="Type here"
+            className="h-12 w-full border border-[#d4c6b8] bg-white px-3 text-[15px]"
+          />
+        </div>
+      )}
 
       <div className="flex max-w-md flex-col gap-3">
         <button
