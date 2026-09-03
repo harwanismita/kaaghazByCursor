@@ -63,6 +63,26 @@ function CloseIcon() {
   );
 }
 
+function SearchPanel() {
+  return (
+    <form
+      action="/search"
+      className="absolute left-0 top-full z-[70] w-[min(92vw,22rem)] border border-[#e8ddd4] bg-[#f7f3ee] p-3 shadow-sm"
+    >
+      <label className="sr-only" htmlFor="header-search">
+        Search
+      </label>
+      <input
+        id="header-search"
+        type="search"
+        name="q"
+        placeholder="Search"
+        className="h-11 w-full border border-[#d4c6b8] bg-white px-3 text-sm outline-none"
+      />
+    </form>
+  );
+}
+
 export function SiteHeader({ cartCount }: { cartCount: number }) {
   return (
     <header className="sticky top-0 z-50 bg-[#f7f3ee]">
@@ -76,35 +96,44 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
 
       <div className="border-b border-[#e8ddd4] bg-[#f7f3ee]">
         <div className="page-width py-[10px] lg:py-5">
-          <div className="grid grid-cols-[44px_minmax(0,1fr)_120px] items-center lg:grid-cols-[1fr_auto_1fr]">
-            <div>
-            <details className="group relative lg:hidden">
-              <summary
-                className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
-                aria-label="Menu"
-              >
-                <span className="group-open:hidden">
-                  <MenuIcon />
-                </span>
-                <span className="hidden group-open:block">
-                  <CloseIcon />
-                </span>
-              </summary>
-              <div className="fixed inset-0 z-[80]">
-                <div className="absolute inset-0 bg-black/40" />
-                <nav className="absolute left-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-[#f7f3ee] px-8 py-10 text-[16px] text-[#2e2a27]">
-                  {site.nav.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="border-b border-[#ece4db] py-3"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            </details>
+          <div className="grid grid-cols-[88px_minmax(0,1fr)_88px] items-center lg:grid-cols-[1fr_auto_1fr]">
+            <div className="flex items-center justify-start text-[#2e2a27]">
+              <details className="group relative lg:hidden">
+                <summary
+                  className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
+                  aria-label="Menu"
+                >
+                  <span className="group-open:hidden">
+                    <MenuIcon />
+                  </span>
+                  <span className="hidden group-open:block">
+                    <CloseIcon />
+                  </span>
+                </summary>
+                <div className="fixed inset-0 z-[80]">
+                  <div className="absolute inset-0 bg-black/40" />
+                  <nav className="absolute left-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-[#f7f3ee] px-8 py-10 text-[16px] text-[#2e2a27]">
+                    {site.nav.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="border-b border-[#ece4db] py-3"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+              </details>
+              <details className="group relative hidden lg:block">
+                <summary
+                  className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
+                  aria-label="Search"
+                >
+                  <SearchIcon />
+                </summary>
+                <SearchPanel />
+              </details>
             </div>
 
             <Link href="/" className="justify-self-center">
@@ -118,33 +147,28 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
               />
             </Link>
 
-            <div className="flex items-center justify-end gap-0.5 text-[#2e2a27]">
-              <details className="group relative">
+            <div className="flex items-center justify-end text-[#2e2a27]">
+              <details className="group relative lg:hidden">
                 <summary
                   className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
                   aria-label="Search"
                 >
                   <SearchIcon />
                 </summary>
-                <form
-                  action="/search"
-                  className="absolute right-0 top-full z-[70] w-[min(92vw,22rem)] border border-[#e8ddd4] bg-[#f7f3ee] p-3 shadow-sm"
-                >
-                  <label className="sr-only" htmlFor="header-search">
-                    Search
-                  </label>
-                  <input
-                    id="header-search"
-                    type="search"
-                    name="q"
-                    placeholder="Search"
-                    className="h-11 w-full border border-[#d4c6b8] bg-white px-3 text-sm outline-none"
-                  />
-                </form>
+                <div className="absolute right-0 top-full z-[70] w-[min(92vw,22rem)] border border-[#e8ddd4] bg-[#f7f3ee] p-3 shadow-sm">
+                  <form action="/search">
+                    <input
+                      type="search"
+                      name="q"
+                      placeholder="Search"
+                      className="h-11 w-full border border-[#d4c6b8] bg-white px-3 text-sm outline-none"
+                    />
+                  </form>
+                </div>
               </details>
               <Link
                 href="/account"
-                aria-label="Account"
+                aria-label="Log in"
                 className="hidden h-11 w-11 items-center justify-center lg:flex"
               >
                 <AccountIcon />
@@ -164,13 +188,9 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
             </div>
           </div>
 
-          <nav className="hidden flex-wrap items-center justify-center pt-1 text-[18px] text-[#2e2a27]/75 lg:flex">
+          <nav className="hidden flex-wrap items-center justify-center pt-1 text-[14px] text-[#2e2a27]/75 lg:flex">
             {site.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="px-8 py-[11px] hover:underline"
-              >
+              <Link key={item.href} href={item.href} className="px-3 py-3 hover:underline">
                 {item.label}
               </Link>
             ))}

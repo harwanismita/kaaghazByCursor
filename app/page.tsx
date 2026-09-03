@@ -127,7 +127,7 @@ export default function HomePage() {
             sizes="(min-width: 750px) 50vw, 100vw"
           />
         </div>
-        <div className="md:px-8">
+        <div className="text-center md:px-8">
           <h2 className="section-heading">Painted by hand. By me</h2>
           <p className="mt-5 text-[15px] leading-8">
             Hi, I&apos;m <strong>Smita</strong>. I paint every piece you see

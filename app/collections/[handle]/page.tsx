@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/product-card";
 import {
@@ -38,21 +37,19 @@ export default async function CollectionPage({ params }: Props) {
 
   return (
     <div className="page-width py-10">
-      <p className="mb-6 text-sm text-[#6b4f3a]">
-        <Link href="/" className="hover:underline">
-          Home
-        </Link>
-        <span> / {col.title}</span>
-      </p>
-      <h1 className="section-heading">{col.title}</h1>
-      {col.description && (
-        <p className="mt-4 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-[#4a403a]">
-          {col.description}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="section-heading">{col.title}</h1>
+          {col.description && (
+            <p className="mt-4 max-w-3xl whitespace-pre-line text-[16px] leading-7">
+              {col.description}
+            </p>
+          )}
+        </div>
+        <p className="text-[14px]">
+          {items.length} {items.length === 1 ? "product" : "products"}
         </p>
-      )}
-      <p className="mt-3 text-sm text-[#6b4f3a]">
-        {items.length} {items.length === 1 ? "piece" : "pieces"}
-      </p>
+      </div>
       <div className="mt-10">
         <ProductGrid
           products={items}

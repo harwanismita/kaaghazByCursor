@@ -45,7 +45,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
       <div className="grid items-start gap-10 md:grid-cols-2">
         <ProductGallery product={product} active={Number(img) || 0} />
         <div>
-          <p className="text-[14px]">{product.vendor}</p>
+          <p className="text-[13px] uppercase tracking-[0.08em]">{product.vendor}</p>
           <h1 className="section-heading mt-2">{product.title}</h1>
           <div className="mt-6">
             <ProductBuyBox product={product} />

@@ -20,6 +20,12 @@ export default async function CartPage() {
         <Link href="/collections/all" className="dawn-btn mt-8">
           Continue shopping
         </Link>
+        <p className="mt-8 text-[15px]">
+          Have an account?{" "}
+          <Link href="/account" className="underline">
+            Log in to check out faster.
+          </Link>
+        </p>
       </div>
     );
   }

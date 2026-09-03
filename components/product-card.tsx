@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           )}
           {sale && (
-            <span className="absolute bottom-2 left-2 bg-[#6b4f3a] px-2 py-0.5 text-[11px] text-white">
+            <span className="absolute bottom-2 left-2 rounded-full bg-[#2e2a27]/55 px-2.5 py-0.5 text-[11px] text-white">
               Sale
             </span>
           )}
