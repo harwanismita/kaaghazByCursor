@@ -77,6 +77,7 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
       <div className="border-b border-[#e8ddd4] bg-[#f7f3ee]">
         <div className="page-width py-[10px] lg:py-5">
           <div className="grid grid-cols-[44px_minmax(0,1fr)_120px] items-center lg:grid-cols-[1fr_auto_1fr]">
+            <div>
             <details className="group relative lg:hidden">
               <summary
                 className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
@@ -104,6 +105,7 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
                 </nav>
               </div>
             </details>
+            </div>
 
             <Link href="/" className="justify-self-center">
               <Image
