@@ -1,0 +1,82 @@
+{
+  "name": "Kaaghaz - The art studio",
+  "tagline": "Hand-painted words for little moments & meaningful homes",
+  "subhead": "Magnets from ₹220 · Nameplates from ₹500 · Made-to-order, by us in India",
+  "email": "info@studiokaaghaz.com",
+  "emailAlt": "kaaghaz.theartstudio@gmail.com",
+  "phone": "7975111625",
+  "instagram": "https://www.instagram.com/kaaghaz_theartstudio/",
+  "instagramHandle": "@kaaghaz_theartstudio",
+  "logo": "https://studiokaaghaz.com/cdn/shop/files/KAAGHAZ_logo-NoBackground.png?v=1778326039&width=400",
+  "favicon": "https://studiokaaghaz.com/cdn/shop/files/KAAGHAZ_logo-NoBackground.png?v=1778326039&width=64",
+  "heroImage": "https://studiokaaghaz.com/cdn/shop/files/file_000000006794720b9e20d803b9895b3d.png?v=1776408644&width=1200",
+  "founderImage": "https://studiokaaghaz.com/cdn/shop/files/Screenshot_2026-05-17_181015.png?v=1779021827&width=900",
+  "customImage": "https://studiokaaghaz.com/cdn/shop/files/20251201_092236.jpg?v=1778829345&width=900",
+  "ogImage": "https://studiokaaghaz.com/cdn/shop/files/20210716_154900_0000_34fec02e-c684-4e3c-97b4-cd390594d781.png?v=1687593690",
+  "freeShippingMin": 1199,
+  "shippingFee": 99,
+  "welcomeCode": "WELCOME10",
+  "welcomeDiscount": 0.1,
+  "currency": "INR",
+  "nav": [
+    {
+      "href": "/collections/kids-nameplates",
+      "label": "Kids Nameplates"
+    },
+    {
+      "href": "/collections/home-nameplates",
+      "label": "Home Nameplates"
+    },
+    {
+      "href": "/collections/pinewood-nameplates-for-kids",
+      "label": "Pinewood Nameplates"
+    },
+    {
+      "href": "/collections/pet-nameplates",
+      "label": "Pet Nameplates"
+    },
+    {
+      "href": "/collections/free-standing-name-signs",
+      "label": "Free-Standing Signs"
+    },
+    {
+      "href": "/collections/quote-frames-wall-decor",
+      "label": "Wall Decor"
+    },
+    {
+      "href": "/collections/return-favors",
+      "label": "Return Gifts"
+    },
+    {
+      "href": "/pages/contact",
+      "label": "Custom Orders"
+    },
+    {
+      "href": "/pages/about",
+      "label": "About"
+    }
+  ],
+  "homeNewLaunch": [
+    "hand-painted-little-super-hero-league-pine-wood-nameboard-6-inch-copy",
+    "hand-painted-rainbow-wishes-pine-wood-nameboard-6-inch-copy",
+    "hand-painted-hot-air-balloon-dreams-pine-wood-nameboard-6-inch-copy",
+    "hand-painted-sunflower-bloom-pine-wood-nameboard-6-inch-copy"
+  ],
+  "homeLoved": [
+    "rainbow-nameboard-with-hot-air-balloon",
+    "harry-potter-theme-kids-nameboard",
+    "unicorn-theme-nameplate-for-kids",
+    "spiderman-theme-nameplate-with-initial-letter",
+    "free-standing-beach-theme-name-sign",
+    "free-standing-space-theme-name-sign",
+    "rainbow-nameboard-for-kids"
+  ],
+  "shopByCategory": [
+    "kids-nameplates",
+    "home-nameplates",
+    "pinewood-nameplates-for-kids",
+    "free-standing-name-signs",
+    "return-favors",
+    "hinglish-magnets-hand-painted"
+  ]
+}
