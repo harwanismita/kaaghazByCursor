@@ -41,51 +41,54 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null);
 const STORAGE_KEY = "kaaghaz-cart-v1";
-const empty: Persist = { items: [], coupon: "" };
+const serverSnapshot: Persist = { items: [], coupon: "" };
 
-let state: Persist = empty;
-let hydrated = false;
-const listeners = new Set<() => void>();
-
-function hydrate() {
-  if (hydrated || typeof window === "undefined") return;
-  hydrated = true;
+function readStorage(): Persist {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as Persist;
-      state = {
-        items: parsed.items ?? [],
-        coupon: parsed.coupon ?? "",
-      };
-    }
+    if (!raw) return { items: [], coupon: "" };
+    const parsed = JSON.parse(raw) as Persist;
+    return {
+      items: Array.isArray(parsed.items) ? parsed.items : [],
+      coupon: typeof parsed.coupon === "string" ? parsed.coupon : "",
+    };
   } catch {
-    state = empty;
+    return { items: [], coupon: "" };
   }
 }
 
-function getClientSnapshot() {
-  hydrate();
-  return state;
+function saveStorage(next: Persist) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    /* ignore quota */
+  }
 }
 
-function getServerSnapshot() {
-  return empty;
+let snapshot: Persist = { items: [], coupon: "" };
+if (typeof window !== "undefined") {
+  snapshot = readStorage();
 }
+
+const listeners = new Set<() => void>();
 
 function subscribe(listener: () => void) {
   listeners.add(listener);
   return () => listeners.delete(listener);
 }
 
+function getSnapshot() {
+  return snapshot;
+}
+
+function getServerSnapshot() {
+  return serverSnapshot;
+}
+
 function write(next: Persist) {
-  state = next;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    /* ignore quota */
-  }
-  listeners.forEach((l) => l());
+  snapshot = next;
+  saveStorage(next);
+  listeners.forEach((listener) => listener());
 }
 
 function makeId(item: Pick<CartItem, "variantId" | "nameToPaint">) {
@@ -93,32 +96,28 @@ function makeId(item: Pick<CartItem, "variantId" | "nameToPaint">) {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const persist = useSyncExternalStore(
-    subscribe,
-    getClientSnapshot,
-    getServerSnapshot,
-  );
+  const persist = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const addItem = useCallback(
     (item: Omit<CartItem, "id" | "quantity"> & { quantity?: number }) => {
       const id = makeId(item);
       const qty = item.quantity ?? 1;
-      const items = getClientSnapshot().items;
-      const existing = items.find((p) => p.id === id);
+      const current = snapshot;
+      const existing = current.items.find((p) => p.id === id);
       write({
-        ...getClientSnapshot(),
+        ...current,
         items: existing
-          ? items.map((p) =>
+          ? current.items.map((p) =>
               p.id === id ? { ...p, quantity: p.quantity + qty } : p,
             )
-          : [...items, { ...item, id, quantity: qty }],
+          : [...current.items, { ...item, id, quantity: qty }],
       });
     },
     [],
   );
 
   const updateQty = useCallback((id: string, quantity: number) => {
-    const current = getClientSnapshot();
+    const current = snapshot;
     write({
       ...current,
       items:
@@ -129,19 +128,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const removeItem = useCallback((id: string) => {
-    const current = getClientSnapshot();
     write({
-      ...current,
-      items: current.items.filter((p) => p.id !== id),
+      ...snapshot,
+      items: snapshot.items.filter((p) => p.id !== id),
     });
   }, []);
 
   const clear = useCallback(() => {
-    write({ ...getClientSnapshot(), items: [] });
+    write({ ...snapshot, items: [] });
   }, []);
 
   const setCoupon = useCallback((code: string) => {
-    write({ ...getClientSnapshot(), coupon: code });
+    write({ ...snapshot, coupon: code });
   }, []);
 
   const value = useMemo(() => {

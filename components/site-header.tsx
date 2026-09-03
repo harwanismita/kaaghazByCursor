@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, ShoppingBag, X } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/lib/cart";
@@ -22,6 +23,26 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [q, setQ] = useState("");
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+  const openedAt = useRef(0);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   function onSearch(e: FormEvent) {
     e.preventDefault();
@@ -31,6 +52,63 @@ export function SiteHeader() {
     setOpen(false);
     router.push(`/search?q=${encodeURIComponent(query)}`);
   }
+
+  const menu =
+    mounted &&
+    open &&
+    createPortal(
+      <div className="fixed inset-0 z-[80] lg:hidden">
+        <button
+          type="button"
+          className="absolute inset-0 bg-black/40"
+          aria-label="Close menu"
+          onClick={() => {
+            if (Date.now() - openedAt.current < 300) return;
+            setOpen(false);
+          }}
+        />
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          className="absolute left-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-[#f7f3ee] p-5 shadow-xl"
+        >
+          <div className="mb-6 flex items-center justify-between">
+            <span className="font-serif text-xl">Kaaghaz</span>
+            <button
+              type="button"
+              className="p-2"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+          <form onSubmit={onSearch} className="mb-6 flex gap-2">
+            <Input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search the studio"
+            />
+          </form>
+          <nav className="flex flex-col gap-4 text-base">
+            <Link href="/" onClick={() => setOpen(false)}>
+              Home
+            </Link>
+            {site.nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      </div>,
+      document.body,
+    );
 
   return (
     <header className="sticky top-0 z-50">
@@ -46,11 +124,18 @@ export function SiteHeader() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
           <button
             type="button"
-            className="lg:hidden"
+            className="relative z-[90] p-2 lg:hidden"
             aria-label="Open menu"
-            onClick={() => setOpen(true)}
+            aria-expanded={open}
+            onClick={() =>
+              setOpen((value) => {
+                const next = !value;
+                if (next) openedAt.current = Date.now();
+                return next;
+              })
+            }
           >
-            <Menu className="h-6 w-6" />
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
           <Link href="/" className="flex items-center">
             <Image
@@ -86,11 +171,13 @@ export function SiteHeader() {
             </Button>
             <Link href="/cart" aria-label="Cart" className="relative p-2">
               <ShoppingBag className="h-5 w-5" />
-              {count > 0 && (
-                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#6b4f3a] px-1 text-[10px] text-white">
-                  {count}
-                </span>
-              )}
+              <span
+                className={`absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#6b4f3a] px-1 text-[10px] text-white ${
+                  count === 0 ? "hidden" : ""
+                }`}
+              >
+                {count}
+              </span>
             </Link>
           </div>
         </div>
@@ -109,46 +196,7 @@ export function SiteHeader() {
           </form>
         )}
       </div>
-
-      {open && (
-        <div className="fixed inset-0 z-[60] lg:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/40"
-            aria-label="Close menu"
-            onClick={() => setOpen(false)}
-          />
-          <div className="absolute left-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-[#f7f3ee] p-5 shadow-xl">
-            <div className="mb-6 flex items-center justify-between">
-              <span className="font-serif text-xl">Kaaghaz</span>
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close">
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <form onSubmit={onSearch} className="mb-6 flex gap-2">
-              <Input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search the studio"
-              />
-            </form>
-            <nav className="flex flex-col gap-4 text-base">
-              <Link href="/" onClick={() => setOpen(false)}>
-                Home
-              </Link>
-              {site.nav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        </div>
-      )}
+      {menu}
     </header>
   );
 }

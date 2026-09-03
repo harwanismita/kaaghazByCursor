@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { findVariant, type Product } from "@/lib/types";
@@ -26,14 +25,14 @@ export function ProductBuyBox({ product }: { product: Product }) {
   );
 
   function add(goToCart = false) {
-    if (!variant) return;
+    if (!variant?.available) return;
     addItem({
       productHandle: product.handle,
       productTitle: product.title,
-      variantId: variant.id,
+      variantId: String(variant.id),
       variantTitle:
         variant.title === "Default Title" ? "Standard" : variant.title,
-      price: variant.price,
+      price: Number(variant.price),
       image: product.images[0]?.src ?? null,
       quantity: qty,
       nameToPaint: product.needsName ? nameToPaint.trim() : undefined,
@@ -115,23 +114,22 @@ export function ProductBuyBox({ product }: { product: Product }) {
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Button
+        <button
           type="button"
-          className="flex-1"
+          className="h-11 flex-1 bg-[#6b4f3a] px-6 text-sm font-semibold tracking-wide text-white hover:bg-[#563f2e] disabled:opacity-50"
           disabled={!variant.available}
           onClick={() => add(false)}
         >
           {variant.available ? "Add to cart" : "Sold out"}
-        </Button>
-        <Button
+        </button>
+        <button
           type="button"
-          variant="outline"
-          className="flex-1"
+          className="h-11 flex-1 border border-[#6b4f3a] bg-transparent px-6 text-sm font-semibold tracking-wide text-[#6b4f3a] hover:bg-[#6b4f3a] hover:text-white disabled:opacity-50"
           disabled={!variant.available}
           onClick={() => add(true)}
         >
           Buy now
-        </Button>
+        </button>
       </div>
       {added && (
         <p className="text-sm text-[#6b4f3a]">
