@@ -8,8 +8,8 @@ export const metadata: Metadata = { title: "About — Kaaghaz The Art Studio" };
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-4xl">Kaaghaz · The Art Studio</h1>
+    <div className="page-width max-w-3xl py-12">
+      <h1 className="section-heading">Kaaghaz · The Art Studio</h1>
       <p className="mt-3 text-lg text-[#4a403a]">
         Hand-painted words for meaningful homes.
       </p>
@@ -36,8 +36,8 @@ export default function AboutPage() {
         <ul className="list-disc space-y-2 pl-5">
           <li>
             Personalised kids&apos; nameplates — hand-painted on sturdy wooden
-            bases, in themes from rainbows to storybook nights. Every
-            nameplate is made for one child.
+            bases, in themes from rainbows to Harry Potter. Every nameplate is
+            made for one child.
           </li>
           <li>
             Home nameplates &amp; signs — arched, free-standing, wood-plank,
@@ -56,13 +56,13 @@ export default function AboutPage() {
         <h2 className="pt-4 text-3xl">How we work</h2>
         <p>
           Everything is made to order — no factory line, no pre-stocking.
-          Magnets ship within 2 days. Nameplates take 5–7 days because they
-          are hand-painted, person by person, name by name.
+          Magnets ship within 2 days. Nameplates take 5–7 days because
+          they&apos;re hand-painted, person by person, name by name.
         </p>
         <h2 className="pt-4 text-3xl">Founder</h2>
         <p>
-          Kaaghaz is run by Smita, who paints every piece herself. If you have
-          DMed us, you have spoken to her directly.
+          Kaaghaz is run by Smita, who paints every piece herself. If
+          you&apos;ve DMed us, you&apos;ve spoken to her directly.
         </p>
         <p>
           Instagram ·{" "}

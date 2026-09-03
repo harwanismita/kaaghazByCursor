@@ -42,8 +42,8 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-4xl">Custom Orders</h1>
+    <div className="page-width max-w-3xl py-12">
+      <h1 className="section-heading">Custom Orders</h1>
       <p className="mt-4 leading-7 text-[#4a403a]">
         Have something specific in mind? We hand-paint custom nameplates,
         signs, and bulk orders to your brief.

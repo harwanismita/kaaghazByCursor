@@ -6,7 +6,10 @@ import { ProductGallery } from "@/components/product-gallery";
 import { ProductGrid } from "@/components/product-card";
 import { getProduct, products } from "@/lib/catalog";
 
-type Props = { params: Promise<{ handle: string }> };
+type Props = {
+  params: Promise<{ handle: string }>;
+  searchParams: Promise<{ img?: string }>;
+};
 
 export function generateStaticParams() {
   return products.map((p) => ({ handle: p.handle }));
@@ -22,8 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({ params, searchParams }: Props) {
   const { handle } = await params;
+  const { img } = await searchParams;
   const product = getProduct(handle);
   if (!product) notFound();
 
@@ -38,25 +42,21 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="page-width py-10">
-      <p className="mb-6 text-sm text-[#6b4f3a]">
-        <Link href="/" className="hover:underline">
-          Home
-        </Link>
-        <span> / </span>
-        <span>{product.title}</span>
-      </p>
-      <div className="grid gap-10 md:grid-cols-2">
-        <ProductGallery product={product} />
+      <div className="grid items-start gap-10 md:grid-cols-2">
+        <ProductGallery product={product} active={Number(img) || 0} />
         <div>
-          <h1 className="section-heading">{product.title}</h1>
-          <p className="mt-2 text-sm text-[#6b4f3a]">
-            100% hand-painted · Made-to-order in India
-          </p>
+          <p className="text-[14px]">{product.vendor}</p>
+          <h1 className="section-heading mt-2">{product.title}</h1>
           <div className="mt-6">
             <ProductBuyBox product={product} />
           </div>
-          {product.description && (
-            <div className="rte mt-10 text-[15px] leading-7 text-[#3d3631] whitespace-pre-line">
+          {product.descriptionHtml ? (
+            <div
+              className="rte mt-8 text-[15px] leading-7"
+              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+            />
+          ) : (
+            <div className="rte mt-8 whitespace-pre-line text-[15px] leading-7">
               {product.description}
             </div>
           )}
@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
       {related.length > 0 && (
         <section className="mt-16">
-          <h2 className="mb-8 text-3xl">You may also like</h2>
+          <h2 className="section-heading mb-8">You may also like</h2>
           <ProductGrid products={related} />
         </section>
       )}

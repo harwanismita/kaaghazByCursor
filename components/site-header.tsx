@@ -4,13 +4,7 @@ import { site } from "@/lib/site";
 
 function SearchIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      viewBox="0 0 18 19"
-      className="h-[18px] w-[18px]"
-      fill="none"
-    >
+    <svg aria-hidden="true" viewBox="0 0 18 19" className="h-[18px] w-[18px]" fill="none">
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -21,15 +15,22 @@ function SearchIcon() {
   );
 }
 
+function AccountIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 18 19" className="h-[18px] w-[18px]" fill="none">
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zM5.32 10.22A5.5 5.5 0 00.5 15.5v.75c0 .41.34.75.75.75h15.5a.75.75 0 00.75-.75v-.75a5.5 5.5 0 00-4.82-5.28.5.5 0 00-.13.99 4.5 4.5 0 013.95 4.29H2.25a4.5 4.5 0 013.95-4.29.5.5 0 10-.13-.99 5.47 5.47 0 00-.75.07z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
 function BagIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      viewBox="0 0 40 40"
-      className="h-[22px] w-[22px]"
-      fill="none"
-    >
+    <svg aria-hidden="true" viewBox="0 0 40 40" className="h-[22px] w-[22px]" fill="none">
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -42,13 +43,7 @@ function BagIcon() {
 
 function MenuIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      viewBox="0 0 18 16"
-      className="h-5 w-5"
-      fill="none"
-    >
+    <svg aria-hidden="true" viewBox="0 0 18 16" className="h-5 w-5" fill="none">
       <path
         fill="currentColor"
         d="M1 .5a.5.5 0 100 1h15.71a.5.5 0 000-1H1zM.5 8a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1A.5.5 0 01.5 8zm0 7a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1a.5.5 0 01-.5-.5z"
@@ -59,13 +54,7 @@ function MenuIcon() {
 
 function CloseIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      viewBox="0 0 18 17"
-      className="h-5 w-5"
-      fill="none"
-    >
+    <svg aria-hidden="true" viewBox="0 0 18 17" className="h-5 w-5" fill="none">
       <path
         fill="currentColor"
         d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.5.5 0 00.693-.721L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z"
@@ -77,18 +66,18 @@ function CloseIcon() {
 export function SiteHeader({ cartCount }: { cartCount: number }) {
   return (
     <header className="sticky top-0 z-50 bg-[#f7f3ee]">
-      <div className="bg-[#6b4f3a] px-5 py-2.5 text-center text-[13px] leading-snug text-white">
+      <div className="bg-[#6b4f3a] px-5 py-[10px] text-center text-[13px] leading-snug text-white">
         Free shipping on orders over ₹1,199          , 100% Hand-painted in
         India · Made-to-order
       </div>
-      <div className="bg-[#6b4f3a] px-5 py-2.5 text-center text-[13px] leading-snug text-white">
+      <div className="bg-[#6b4f3a] px-5 py-[10px] text-center text-[13px] leading-snug text-white">
         Use code WELCOME10 for 10% off your first order
       </div>
 
       <div className="border-b border-[#e8ddd4] bg-[#f7f3ee]">
-        <div className="page-width">
-          <div className="grid grid-cols-[44px_minmax(0,1fr)_88px] items-center py-2 lg:grid-cols-[1fr_auto_1fr] lg:py-3">
-            <details className="group relative lg:invisible lg:pointer-events-none">
+        <div className="page-width py-[10px] lg:py-5">
+          <div className="grid grid-cols-[44px_minmax(0,1fr)_120px] items-center lg:grid-cols-[1fr_auto_1fr]">
+            <details className="group relative lg:hidden">
               <summary
                 className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
                 aria-label="Menu"
@@ -100,9 +89,9 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
                   <CloseIcon />
                 </span>
               </summary>
-              <div className="fixed inset-0 z-[80] lg:hidden">
+              <div className="fixed inset-0 z-[80]">
                 <div className="absolute inset-0 bg-black/40" />
-                <nav className="absolute left-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-[#f7f3ee] px-8 py-10 text-[16px]">
+                <nav className="absolute left-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-[#f7f3ee] px-8 py-10 text-[16px] text-[#2e2a27]">
                   {site.nav.map((item) => (
                     <Link
                       key={item.href}
@@ -127,7 +116,7 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
               />
             </Link>
 
-            <div className="flex items-center justify-end gap-0.5">
+            <div className="flex items-center justify-end gap-0.5 text-[#2e2a27]">
               <details className="group relative">
                 <summary
                   className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden"
@@ -152,6 +141,13 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
                 </form>
               </details>
               <Link
+                href="/account"
+                aria-label="Account"
+                className="hidden h-11 w-11 items-center justify-center lg:flex"
+              >
+                <AccountIcon />
+              </Link>
+              <Link
                 href="/cart"
                 aria-label="Cart"
                 className="relative flex h-11 w-11 items-center justify-center"
@@ -166,12 +162,12 @@ export function SiteHeader({ cartCount }: { cartCount: number }) {
             </div>
           </div>
 
-          <nav className="hidden flex-wrap items-center justify-center gap-x-[22px] gap-y-1 pb-3.5 text-[14px] lg:flex">
+          <nav className="hidden flex-wrap items-center justify-center pt-1 text-[18px] text-[#2e2a27]/75 lg:flex">
             {site.nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="py-1 hover:underline"
+                className="px-8 py-[11px] hover:underline"
               >
                 {item.label}
               </Link>

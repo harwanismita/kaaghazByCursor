@@ -38,18 +38,32 @@ export async function addToCart(formData: FormData) {
   const quantity = Math.max(1, Number(formData.get("quantity") ?? 1) || 1);
   const intent = String(formData.get("intent") ?? "add");
   const product = getProduct(handle);
-  const variant = product?.variants.find((v) => String(v.id) === variantId);
+  const option1 = String(formData.get("option1") ?? "");
+  const option2 = String(formData.get("option2") ?? "");
+  const option3 = String(formData.get("option3") ?? "");
+  const variant =
+    product?.variants.find((v) => {
+      if (option1 || option2 || option3) {
+        return (
+          (!option1 || v.option1 === option1) &&
+          (!option2 || v.option2 === option2) &&
+          (!option3 || v.option3 === option3)
+        );
+      }
+      return String(v.id) === variantId;
+    }) ?? product?.variants.find((v) => String(v.id) === variantId);
   if (!product || !variant?.available) {
     return;
   }
 
-  const id = lineId(handle, variantId, nameToPaint);
+  const resolvedId = String(variant.id);
+  const id = lineId(handle, resolvedId, nameToPaint);
   const cart = await readCart();
   const existing = cart.items.find((item) => item.id === id);
   const line: CartLine = {
     id,
     handle,
-    variantId,
+    variantId: resolvedId,
     quantity,
     nameToPaint: nameToPaint || undefined,
   };

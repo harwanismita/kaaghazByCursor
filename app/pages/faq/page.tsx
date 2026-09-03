@@ -36,8 +36,8 @@ const faqs = [
 
 export default function FaqPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-4xl">FAQ</h1>
+    <div className="page-width max-w-3xl py-12">
+      <h1 className="section-heading">FAQ</h1>
       <dl className="mt-10 space-y-8">
         {faqs.map((f) => (
           <div key={f.q}>
