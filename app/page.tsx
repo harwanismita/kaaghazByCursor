@@ -53,7 +53,7 @@ export default function HomePage() {
               sizes="(min-width: 750px) 50vw, 100vw"
             />
           </div>
-          <div className="py-8 md:px-12">
+          <div className="py-8 text-center md:px-12 md:text-left">
             <h2 className="section-heading">
               {site.tagline}
             </h2>
