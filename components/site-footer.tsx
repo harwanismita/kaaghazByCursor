@@ -65,8 +65,11 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-[#ece4db]">
-        <div className="page-width flex flex-col items-center justify-between gap-4 py-4 text-[13px] sm:flex-row">
-          <p>© {new Date().getFullYear()}, Kaaghaz - The art studio</p>
+        <div className="page-width flex flex-col items-center justify-between gap-4 py-5 text-[13px] sm:flex-row">
+          <div>
+            <p>© {new Date().getFullYear()}, Kaaghaz - The art studio</p>
+            <p className="mt-1">Payment methods · UPI · Cards · Net Banking</p>
+          </div>
           <div className="flex items-center gap-5">
             <a href="https://www.facebook.com/KaaghazArtStudio/" aria-label="Kaaghaz on Facebook">
               <svg viewBox="0 0 18 18" className="h-4 w-4" aria-hidden="true">
