@@ -1,5 +1,7 @@
 # Kaaghaz The Art Studio
 
+GitHub: [harwanismita/kaaghazByCursor](https://github.com/harwanismita/kaaghazByCursor)
+
 A free replacement for the Shopify store at [studiokaaghaz.com](https://studiokaaghaz.com/). Same cream-and-brown look, same products, same copy — without the ₹1,994/month Shopify Basic plan.
 
 Smita still paints every piece. Shoppers browse the catalog, add to cart, and send the order on WhatsApp (7975111625). Payment is UPI / transfer, confirmed by Smita. There is no monthly website fee.
@@ -26,8 +28,8 @@ Open [http://localhost:43217](http://localhost:43217).
 
 This is a standard Next.js app. Host it on [Vercel](https://vercel.com) (free hobby plan):
 
-1. Push this repo to GitHub / Origin
-2. Import the project in Vercel
+1. Push this project to [github.com/harwanismita/kaaghazByCursor](https://github.com/harwanismita/kaaghazByCursor)
+2. Import that GitHub repo in Vercel
 3. Click Deploy
 4. Point `studiokaaghaz.com` at Vercel when you are ready to leave Shopify (or use the free `*.vercel.app` URL until then)
 

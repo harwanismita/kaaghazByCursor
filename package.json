@@ -1,7 +1,11 @@
 {
-  "name": "kaaghaz-studio",
+  "name": "kaaghazbycursor",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harwanismita/kaaghazByCursor.git"
+  },
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0 --port 43217 --webpack",
     "build": "next build",
