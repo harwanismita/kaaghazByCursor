@@ -1,48 +1,29 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { addToCart } from "@/app/actions/cart";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { findVariant, type Product } from "@/lib/types";
-import { useCart } from "@/lib/cart";
 import { formatInr } from "@/lib/utils";
 
 export function ProductBuyBox({ product }: { product: Product }) {
-  const router = useRouter();
-  const { addItem } = useCart();
   const initial = Object.fromEntries(
     product.options.map((o) => [o.name, o.values[0]]),
   );
   const [selected, setSelected] = useState<Record<string, string>>(initial);
   const [nameToPaint, setNameToPaint] = useState("");
   const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
 
   const variant = useMemo(
     () => findVariant(product, selected),
     [product, selected],
   );
 
-  function add(goToCart = false) {
-    if (!variant?.available) return;
-    addItem({
-      productHandle: product.handle,
-      productTitle: product.title,
-      variantId: String(variant.id),
-      variantTitle:
-        variant.title === "Default Title" ? "Standard" : variant.title,
-      price: Number(variant.price),
-      image: product.images[0]?.src ?? null,
-      quantity: qty,
-      nameToPaint: product.needsName ? nameToPaint.trim() : undefined,
-    });
-    setAdded(true);
-    if (goToCart) router.push("/cart");
-  }
-
   return (
-    <div className="space-y-6">
+    <form action={addToCart} className="space-y-6">
+      <input type="hidden" name="handle" value={product.handle} />
+      <input type="hidden" name="variantId" value={String(variant.id)} />
       <div>
         <p className="text-xl">
           {variant.compareAt && variant.compareAt > variant.price && (
@@ -89,6 +70,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           <Label htmlFor="name-to-paint">Name to paint</Label>
           <Input
             id="name-to-paint"
+            name="nameToPaint"
             className="mt-2"
             placeholder="e.g. Aanya, or The Sharmas"
             value={nameToPaint}
@@ -105,6 +87,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
         <Label htmlFor="qty">Quantity</Label>
         <Input
           id="qty"
+          name="quantity"
           type="number"
           min={1}
           className="mt-2 w-28"
@@ -115,30 +98,24 @@ export function ProductBuyBox({ product }: { product: Product }) {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <button
-          type="button"
+          type="submit"
+          name="intent"
+          value="add"
           className="h-11 flex-1 bg-[#6b4f3a] px-6 text-sm font-semibold tracking-wide text-white hover:bg-[#563f2e] disabled:opacity-50"
           disabled={!variant.available}
-          onClick={() => add(false)}
         >
           {variant.available ? "Add to cart" : "Sold out"}
         </button>
         <button
-          type="button"
+          type="submit"
+          name="intent"
+          value="buy"
           className="h-11 flex-1 border border-[#6b4f3a] bg-transparent px-6 text-sm font-semibold tracking-wide text-[#6b4f3a] hover:bg-[#6b4f3a] hover:text-white disabled:opacity-50"
           disabled={!variant.available}
-          onClick={() => add(true)}
         >
           Buy now
         </button>
       </div>
-      {added && (
-        <p className="text-sm text-[#6b4f3a]">
-          Added to cart.{" "}
-          <button type="button" className="underline" onClick={() => router.push("/cart")}>
-            View cart
-          </button>
-        </p>
-      )}
-    </div>
+    </form>
   );
 }

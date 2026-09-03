@@ -1,28 +1,20 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { applyCoupon, removeCartItem, updateCartQty } from "@/app/actions/cart";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useCart } from "@/lib/cart";
+import { CART_COOKIE, parseCart } from "@/lib/cart-data";
 import { site } from "@/lib/site";
+import { cartTotals } from "@/lib/totals";
 import { formatInr, shopifyImage } from "@/lib/utils";
 
-export default function CartPage() {
-  const {
-    items,
-    updateQty,
-    removeItem,
-    subtotal,
-    shipping,
-    discount,
-    total,
-    coupon,
-    setCoupon,
-    couponApplied,
-  } = useCart();
+export default async function CartPage() {
+  const jar = await cookies();
+  const cart = parseCart(jar.get(CART_COOKIE)?.value);
+  const { lines, subtotal, shipping, discount, total, couponApplied, coupon } =
+    cartTotals(cart);
 
-  if (items.length === 0) {
+  if (lines.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-20 text-center">
         <h1 className="text-4xl">Your cart is empty</h1>
@@ -42,7 +34,7 @@ export default function CartPage() {
       <h1 className="text-4xl">Your cart</h1>
       <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_320px]">
         <ul className="divide-y divide-[#e8ddd4]">
-          {items.map((item) => (
+          {lines.map((item) => (
             <li key={item.id} className="flex gap-4 py-5">
               <div className="relative h-24 w-24 shrink-0 overflow-hidden bg-[#e8ddd4]">
                 {item.image && (
@@ -67,22 +59,25 @@ export default function CartPage() {
                 )}
                 <p className="mt-1 text-sm">{formatInr(item.price)}</p>
                 <div className="mt-3 flex items-center gap-3">
-                  <Input
-                    type="number"
-                    min={1}
-                    className="h-9 w-20"
-                    value={item.quantity}
-                    onChange={(e) =>
-                      updateQty(item.id, Math.max(1, Number(e.target.value) || 1))
-                    }
-                  />
-                  <button
-                    type="button"
-                    className="text-sm underline"
-                    onClick={() => removeItem(item.id)}
-                  >
-                    Remove
-                  </button>
+                  <form action={updateCartQty} className="flex items-center gap-2">
+                    <input type="hidden" name="id" value={item.id} />
+                    <input
+                      name="quantity"
+                      type="number"
+                      min={1}
+                      defaultValue={item.quantity}
+                      className="h-9 w-20 border border-[#d4c6b8] bg-white px-2 text-sm"
+                    />
+                    <button type="submit" className="text-sm underline">
+                      Update
+                    </button>
+                  </form>
+                  <form action={removeCartItem}>
+                    <input type="hidden" name="id" value={item.id} />
+                    <button type="submit" className="text-sm underline">
+                      Remove
+                    </button>
+                  </form>
                 </div>
               </div>
               <p className="text-sm font-medium">
@@ -113,12 +108,16 @@ export default function CartPage() {
               <span>{formatInr(total)}</span>
             </div>
           </div>
-          <div className="mt-4">
-            <Input
-              value={coupon}
-              onChange={(e) => setCoupon(e.target.value)}
+          <form action={applyCoupon} className="mt-4">
+            <input
+              name="coupon"
+              defaultValue={coupon}
               placeholder="Discount code"
+              className="h-11 w-full border border-[#d4c6b8] bg-white px-3 text-sm"
             />
+            <button type="submit" className="mt-2 text-sm underline">
+              Apply
+            </button>
             {coupon && !couponApplied && (
               <p className="mt-1 text-xs text-red-700">
                 Try {site.welcomeCode} for 10% off your first order.
@@ -129,7 +128,7 @@ export default function CartPage() {
                 First-order discount applied.
               </p>
             )}
-          </div>
+          </form>
           {subtotal < site.freeShippingMin && (
             <p className="mt-3 text-xs text-[#6b4f3a]">
               Add {formatInr(site.freeShippingMin - subtotal)} more for free
